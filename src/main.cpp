@@ -9,12 +9,14 @@
 #endif
 #define fileConfig "/configuration.json"
 #define payloadSize 2048
+#include "mqtt.h"
 
 String payloadString;
 DynamicJsonDocument configJson(payloadSize);
 
 int getPinIdOutput(int softwarePin)
 {
+
   if (!configJson.containsKey("configs"))
     return -1;
   else if (!configJson["configs"].containsKey("pins"))
@@ -66,7 +68,8 @@ void configPins()
 void setup()
 {
   Serial.begin(9600);
-  Serial.println("\ndevice id: " + String(deviceID()));
+  Serial.println();
+  Serial.println("device id: " + String(deviceID()) + String("##"));
 
   // SPIFFS.format();
   // Serial.println("Formated...");
@@ -102,6 +105,8 @@ void setup()
   }
   else
     Serial.println("failed to mount FS.");
+
+  mqttSetup(configJson);
 }
 
 void updateStateConfigMemory(int hardwarePin, int state)
@@ -120,6 +125,8 @@ void updateStateConfigMemory(int hardwarePin, int state)
   deserializeJson(configJson, configJsonStr);
 
   writeJsonMemory(configJson);
+
+  // report
 }
 
 void loop()
@@ -142,7 +149,7 @@ void loop()
         configJson = payloadJson;
         // payloadJson.clear();
         // CHECK id
-        if (configJson["configs"]["id"].as<String>().equals("c8f09e9c76bc"))
+        if (configJson["configs"]["id"].as<String>().equals(deviceID()))
         {
           configPins();
           writeJsonMemory(configJson);
@@ -177,10 +184,17 @@ void loop()
 
               // // UPDATE configs
               updateStateConfigMemory(hardwarePin, state.toInt());
+
+              String msg = "\"state\":{\"reported\":{\"" + String(jsonPair.key().c_str()) + "\": " + state + "}}";
+              client.publish(pub_topic.c_str(), msg.c_str());
+
+              // Serial.println("\"state\":{\"reported\":{\"" + String(jsonPair.key().c_str()) + "\": " + state + "}}##");
             }
           }
         }
       }
     }
   }
+
+  mqttLoop();
 }

@@ -1,39 +1,125 @@
 
-This directory is intended for project header files.
+Esp32 to use GPIO, Wifi and MQTT
 
-A header file is a file containing C declarations and macro definitions
-to be shared between several project source files. You request the use of a
-header file in your project source file (C, C++, etc) located in `src` folder
-by including it, with the C preprocessing directive `#include'.
 
-```src/main.c
-
-#include "header.h"
-
-int main (void)
+- Command to send Json: 
+```
+echo -ne '[msg]##' > /dev/ttyUSB0 
+```
+- Json IO config example:
+```
 {
- ...
+  "configs": {
+    "ssid": "brisa-2702988",
+    "password": "o5du40iw",
+    "broker": "192.168.0.12",
+    "broker_user":"tocktec.com.br",
+    "broker_pass":"tock30130tecnologia",
+    "device": "esp32-wroom",
+    "id": "94e6863ce91c",
+    "pins": [
+      {
+        "softwarePin": 25,
+        "hardwarePin": 15,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 26,
+        "hardwarePin": 2,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 27,
+        "hardwarePin": 0,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 28,
+        "hardwarePin": 4,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 29,
+        "hardwarePin": 16,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 30,
+        "hardwarePin": 17,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 31,
+        "hardwarePin": 5,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 24,
+        "hardwarePin": 18,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 17,
+        "hardwarePin": 13,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 18,
+        "hardwarePin": 12,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 19,
+        "hardwarePin": 14,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 20,
+        "hardwarePin": 27,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 21,
+        "hardwarePin": 26,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 22,
+        "hardwarePin": 25,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 23,
+        "hardwarePin": 33,
+        "state": 1,
+        "mode": "out"
+      },
+      {
+        "softwarePin": 24,
+        "hardwarePin": 32,
+        "state": 1,
+        "mode": "out"
+      }
+    ]
+  }
 }
 ```
+- msg: 
+```
+{"configs":{"ssid":"izaias","password":"izaiascomz","broker":"192.168.241.180","broker_user":"tocktec.com.br","broker_pass":"tock30130tecnologia","device":"esp32-wroom","id":"94e6863ce91c","pins":[{"softwarePin":25,"hardwarePin":15,"state":1,"mode":"out"},{"softwarePin":26,"hardwarePin":2,"state":1,"mode":"out"},{"softwarePin":27,"hardwarePin":0,"state":1,"mode":"out"},{"softwarePin":28,"hardwarePin":4,"state":1,"mode":"out"},{"softwarePin":29,"hardwarePin":16,"state":1,"mode":"out"},{"softwarePin":30,"hardwarePin":17,"state":1,"mode":"out"},{"softwarePin":31,"hardwarePin":5,"state":1,"mode":"out"},{"softwarePin":24,"hardwarePin":18,"state":1,"mode":"out"},{"softwarePin":17,"hardwarePin":13,"state":1,"mode":"out"},{"softwarePin":18,"hardwarePin":12,"state":1,"mode":"out"},{"softwarePin":19,"hardwarePin":14,"state":1,"mode":"out"},{"softwarePin":20,"hardwarePin":27,"state":1,"mode":"out"},{"softwarePin":21,"hardwarePin":26,"state":1,"mode":"out"},{"softwarePin":22,"hardwarePin":25,"state":1,"mode":"out"},{"softwarePin":23,"hardwarePin":33,"state":1,"mode":"out"},{"softwarePin":24,"hardwarePin":32,"state":1,"mode":"out"}]}}
+```
 
-Including a header file produces the same results as copying the header file
-into each source file that needs it. Such copying would be time-consuming
-and error-prone. With a header file, the related declarations appear
-in only one place. If they need to be changed, they can be changed in one
-place, and programs that include the header file will automatically use the
-new version when next recompiled. The header file eliminates the labor of
-finding and changing all the copies as well as the risk that a failure to
-find one copy will result in inconsistencies within a program.
-
-In C, the usual convention is to give header files names that end with `.h'.
-It is most portable to use only letters, digits, dashes, and underscores in
-header file names, and at most one dot.
-
-Read more about using header files in official GCC documentation:
-
-* Include Syntax
-* Include Operation
-* Once-Only Headers
-* Computed Includes
-
-https://gcc.gnu.org/onlinedocs/cpp/Header-Files.html
